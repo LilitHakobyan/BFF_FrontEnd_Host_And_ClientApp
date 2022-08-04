@@ -26,7 +26,7 @@ builder.Services.AddReverseProxy()
 
                 Match = new RouteMatch
                 {
-                    Path = "/credentials/{**catch-all}"
+                    Path = "/api/{**catch-all}"
                 }
             }.WithAccessToken(TokenType.User),
         },
@@ -38,10 +38,11 @@ builder.Services.AddReverseProxy()
 
                 Destinations = new Dictionary<string, DestinationConfig>(StringComparer.OrdinalIgnoreCase)
                 {
-                    {"destination1", new DestinationConfig() {Address = "https://localhost:781/api"}}
+                    {"destination1", new DestinationConfig {Address = "https://localhost:901"}}
                 }
             }
         });
+
 //.LoadFromConfig(builder.Configuration.GetSection("ReverseProxy"));
 
 
@@ -61,17 +62,17 @@ builder.Services.AddAuthentication(options =>
     options.Authority = "https://localhost:901";
     options.ClientId = "clientid";
 
-    //  options.ClientSecret = "secret";
     options.ResponseType = "code";
     options.ResponseMode = "query";
     options.GetClaimsFromUserInfoEndpoint = true;
     options.MapInboundClaims = false;
     options.SaveTokens = true;
+
     options.Scope.Clear();
     options.Scope.Add("openid");
     options.Scope.Add("profile");
-    // options.Scope.Add("api");
     options.Scope.Add("offline_access");
+
     options.TokenValidationParameters = new()
     {
         NameClaimType = "name",

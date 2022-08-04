@@ -134,7 +134,7 @@ export class FetchData extends Component {
   }
 
   async populateWeatherData() {
-    var req = new Request('/credentials', {
+    var req = new Request('/api/credentials', {
       headers: new Headers({
         'X-CSRF': '1'
       })
